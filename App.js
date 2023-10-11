@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+
+import { ReactNativeKeycloakProvider, RNKeycloak } from '@react-keycloak/native';
+import Login from './Login';
+
+const keycloak = new RNKeycloak({
+  url: 'https://auth2.skill-explorer.com/',
+  realm: 'visitcard',
+  clientId: 'login-app',
+});
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ReactNativeKeycloakProvider
+      authClient={keycloak}
+      initOptions={{ redirectUri: 'myapp://Homepage' }}
+    >
+      <Login />
+    </ReactNativeKeycloakProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
